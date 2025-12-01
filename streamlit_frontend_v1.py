@@ -1,6 +1,6 @@
 import streamlit as st
 from langgraph_backend_v1 import chatbot
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage
 
 if 'message_history' not in st.session_state:
     st.session_state['message_history'] = []
