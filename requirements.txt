@@ -20,3 +20,5 @@ langgraph
 python-dotenv
 
 streamlit
+
+ddgs
