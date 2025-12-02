@@ -1,5 +1,5 @@
 import streamlit as st
-from langgraph_backend_v4_sqlite import chatbot, retrieve_all_threads
+from langgraph_backend_v5_with_tool import chatbot, retrieve_all_threads
 from langchain_core.messages import HumanMessage
 import uuid
 
@@ -49,12 +49,9 @@ for thread_id in st.session_state['chat_threads'][::-1]:
 
         temp_message = []
 
-        for message in messages:
-            if isinstance(message, HumanMessage):
-                role = 'user'
-            else:
-                role = 'assistant'
-            temp_message.append({'role': role, 'content': message.content})
+        for msg in messages:
+            role = "user" if isinstance(msg, HumanMessage) else "assistant"
+            temp_message.append({'role': role, 'content': msg.content})
 
         st.session_state['message_history'] = temp_message
 
