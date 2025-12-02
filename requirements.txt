@@ -9,6 +9,7 @@ scikit-learn
 
 langchain
 langchain-core
+langchain_community
 
 langchain-huggingface
 transformers
