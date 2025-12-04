@@ -7,6 +7,7 @@
 - **Tool Calling** (RAG, Web Search, Stock Price API, Calculator)  
 - **Multi-Thread Memory** using **SQLite checkpointing**  
 - **Streamlit Chat UI** with real-time response streaming (as a typewriter effect)
+- **Observability with LangSmith** providing an effective tool for monitoring
 
 ---
 
