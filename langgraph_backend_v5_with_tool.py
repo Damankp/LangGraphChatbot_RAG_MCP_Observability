@@ -11,6 +11,7 @@ from langchain_core.tools import tool
 from langchain_community.tools import DuckDuckGoSearchRun
 from langgraph.prebuilt import ToolNode, tools_condition
 
+from langchain_openai import ChatOpenAI
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
 
@@ -21,12 +22,18 @@ load_dotenv()
 # ------------------------------2. Define LLM and Model------------------------------------
 
 # Creating model using HuggingFaceEndpoint and ChatHuggingFace
-llm = HuggingFaceEndpoint(
-    repo_id="meta-llama/Llama-3.1-8B-Instruct",
-    task="text-generation"
-)
 
-model = ChatHuggingFace(llm = llm)
+# Using HuggingFace API to access OpenSource LLM - LLAMA
+# llm = HuggingFaceEndpoint(
+#     # repo_id="meta-llama/Llama-3.1-8B-Instruct",
+#     repo_id="openai/gpt-oss-120b",
+#     task="text-generation"
+# )
+
+# model = ChatHuggingFace(llm = llm)
+
+# Using OpenAI LLM
+llm = ChatOpenAI()
 
 # ------------------------------3. Tools---------------------------------------------------
 
@@ -88,7 +95,7 @@ def chat_node(state: ChatState) -> ChatState:
     messages = state['messages']
 
     #send the query to the model
-    response = model.invoke(messages)
+    response = llm_with_tools.invoke(messages)
 
     #save the response to the state
     return {'messages': [response]}
@@ -108,7 +115,7 @@ graph = StateGraph(ChatState)
 
 # Add nodes
 graph.add_node("chat_node", chat_node)
-graph.add_node("tool_node", tool_node)
+graph.add_node("tools", tool_node)
 
 # Add edges
 graph.add_edge(START, "chat_node")
